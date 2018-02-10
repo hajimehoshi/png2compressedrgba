@@ -71,7 +71,10 @@ func run() error {
 		}
 	}
 
-	cw := gzip.NewWriter(out)
+	cw, err := gzip.NewWriterLevel(out, gzip.BestCompression)
+	if err != nil {
+		return err
+	}
 	defer cw.Close()
 
 	if _, err := cw.Write(rgba); err != nil {
